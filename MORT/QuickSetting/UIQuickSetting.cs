@@ -1,35 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MORT.LocalizeManager;
+System;
+System.Collections.Generic;
+System.Windows.Forms;
+MORT.LocalizeManager;
 
-namespace MORT
+ MORT
 {
  
 
-    public partial class UIQuickSetting : Form, ILocalizeForm
+UIQuickSetting : Form, ILocalizeForm
     {            
 
-        private enum StepType
+        enum StepType
         {
             None, SetFont, SetOCR, OcrComplete, Final,
         }
        
 
-        private StepType currentStepType = StepType.None;
+        StepType currentStepType StepType.None;
 
-        private QuickSettingData settingData = null;
+        QuickSettingData settingData null;
 
 
-        public UIQuickSetting()
+        UIQuickSetting()
         {
             InitializeComponent();
             LocalizeForm();
         }
 
-        public void LocalizeForm()
+        void LocalizeForm()
         {
-            this.LocalizeLabel("Quick Setting");
+            LocalizeLabel("Quick Setting");
             rbBlack.LocalizeLabel("Quick Setting Black");
             rbWhite.LocalizeLabel("Quick Setting White");
             rbUnknown.LocalizeLabel("Quick Setting Unknown");
@@ -43,14 +43,14 @@ namespace MORT
             btNext.LocalizeLabel("Common Next");
         }
 
-        public void Show(OcrLanguageType language)
+        void Show(OcrLanguageType language)
         {
-            settingData = new QuickSettingData();
+            settingData = QuickSettingData();
 
             FormManager.Instace.SetTopMostOcrArea(false);
             DisableAll();
-            this.Show();
-            settingData.languageType = language;
+            Show();
+            settingData.languageType language;
 
             ShowSetFont();
         }
@@ -58,74 +58,74 @@ namespace MORT
         /// <summary>
         /// 폰트 색 설정하기
         /// </summary>
-        private void SetFontColor()
+        void SetFontColor()
         {
-            if (rbBlack.Checked)
+            (rbBlack.Checked)
             {
-                settingData.fontColorType = QuickSettingData.FontColorType.Black;
+                settingData.fontColorType  QuickSettingData.FontColorType.Black;
             }
             else if (rbWhite.Checked)
             {
-                settingData.fontColorType = QuickSettingData.FontColorType.White;
+                settingData.fontColorType =QuickSettingData.FontColorType.White;
             }
             else
             {
-                settingData.fontColorType = QuickSettingData.FontColorType.None;
+                settingData.fontColorType QuickSettingData.FontColorType.None;
             }
 
 
         }
 
-        private void SetTranslatorType()
+        void SetTranslatorType()
         {
-            SettingManager.TransType transType = SettingManager.TransType.google_url;
+            SettingManager.TransType transType SettingManager.TransType.google_url;
 
-            if(settingData.languageType == OcrLanguageType.English)
+            (settingData.languageType OcrLanguageType.vi)
             {
                 //구글 기본 번역기
-                transType = SettingManager.TransType.google_url;
+                transType SettingManager.TransType.google_url;
             }
-            else if(settingData.languageType == OcrLanguageType.Japen)
+            else if(settingData.languageType OcrLanguageType.Japen)
             {
                 //1. 이지트랜스 사용여부 체크 -> 되면 이지 트랜스
                 //2. 안 되면 구글 기본 번역기
-                bool isEzTrans = TransManager.Instace.InitEzTrans();
+                bool isEzTrans TransManager.Instace.InitEzTrans();
 
-                if(isEzTrans)
+                (isEzTrans)
                 {
-                    transType = SettingManager.TransType.ezTrans;
+                    transType SettingManager.TransType.ezTrans;
                 }
                 else
                 {
-                    transType = SettingManager.TransType.google_url;
+                    transType SettingManager.TransType.google_url;
                 }
             }
 
-            settingData.transType = transType;
+            settingData.transType transType;
         }
 
-        private void SetOcrType()
+        void SetOcrType()
         {
-            settingData.ocrType = SettingManager.OcrType.Tesseract;
+            settingData.ocrType SettingManager.OcrType.Tesseract;
 
-            if (FormManager.Instace.MyMainForm.isAvailableWinOCR)
+            (FormManager.Instace.MyMainForm.isAvailableWinOCR)
             {
-                List<string> codeList = FormManager.Instace.MyMainForm.WinLanguageCodeList;
-                string code = settingData.LanguageCode;
+                codeList FormManager.Instace.MyMainForm.WinLanguageCodeList;
+                string code settingData.LanguageCode;
 
-                foreach(var obj in codeList)
+                (var obj codeList)
                 {
-                    if(Util.GetIsEqualWinCode(code, obj))
+                    (Util.GetIsEqualWinCode(code, obj))
                     {
-                        settingData.ocrType = SettingManager.OcrType.Window;
+                        settingData.ocrType SettingManager.OcrType.Window;
                     }
                 }
             }
         }
 
-        private void SetSetting()
+        void SetSetting()
         {
-            if (FormManager.Instace.MySearchOptionForm != null)
+            (FormManager.Instace.MySearchOptionForm null)
             {
                 FormManager.Instace.MySearchOptionForm.acceptCaptureArea();
             }
