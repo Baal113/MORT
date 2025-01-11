@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using WK.Libraries.SharpClipboardNS;
 using static WK.Libraries.SharpClipboardNS.SharpClipboard;
 
@@ -56,7 +56,7 @@ namespace MORT.ClipboardAssist
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
                 Console.WriteLine("Start clipboard");
-                // Get the cut/copied text.
+                
                 _callback.TextChange(_clipboard.ClipboardText);
             }
         }
